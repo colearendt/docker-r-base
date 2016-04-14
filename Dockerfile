@@ -1,33 +1,53 @@
 FROM ubuntu:12.04
 MAINTAINER Chad Barraford <chad@rstudio.com>
 
-# Enable apt mirrors
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt precise main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt precise-updates main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt precise-security main restricted universe multiverse" >> /etc/apt/sources.list
-RUN echo "deb mirror://mirrors.ubuntu.com/mirrors.txt precise-backports main restricted universe multiverse" >> /etc/apt/sources.list
+# add R apt repository
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu precise/" >> /etc/apt/sources.list.d/cran-rstudio.list
 
-# Add R apt repository
-RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu precise/" >> /etc/apt/sources.list
+# add OpenJDK PPA
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 86F44E2A
+RUN echo "deb http://ppa.launchpad.net/openjdk-r/ppa/ubuntu precise main" >> /etc/apt/sources.list.d/openjdk-ppa.list
 
 # Set default locale
 RUN update-locale --reset LANG=C.UTF-8
 
-`# Update apt
-RUN apt-get -y -qq update
+# update apt & install packages
+RUN apt-get update -qq && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    biblatex \
+    build-essential \
+    curl \
+    jags \
+    libatlas3gf-base \
+    libboost-all-dev \
+    libcairo2 \
+    libcairo2-dev \
+    libfftw3-dev \
+    libgdal1-dev \
+    libgraphviz-dev \
+    libmyodbc \
+    libmysqlclient15-dev \
+    libnetcdf-dev \
+    libproc-dev \
+    libproj-dev \
+    libprotoc-dev \
+    libxml2-dev \
+    libxt-dev \
+    libxt6 \
+    lsb-release \
+    odbc-postgresql \
+    protobuf-compiler \
+    sudo \
+    tdsodbc \
+    texinfo \
+    texlive \
+    texlive-bibtex-extra \
+    texlive-fonts-extra \
+    texlive-latex-extra \
+    texlive-xetex \
+    unixodbc \
+    unixodbc-dev \
+    wget
 
-RUN apt-get -y --force-yes --no-install-recommends install openjdk-7-jdk
-
-# Install add-on packages
-RUN apt-get -y --force-yes install sudo lsb-release curl wget libatlas3gf-base texinfo texlive texlive-fonts-extra texlive-latex-extra biblatex texlive-bibtex-extra texlive-xetex libxml2-dev protobuf-compiler libprotoc-dev libmysqlclient15-dev unixodbc unixodbc-dev libmyodbc odbc-postgresql tdsodbc libgraphviz-dev libproj-dev libfftw3-dev libnetcdf-dev libproc-dev libgdal1-dev libcairo2 libcairo2-dev libxt6 libxt-dev jags libboost-all-dev build-essential
-
-# install RQuantLib
-RUN \
-    cd /tmp && \
-    curl -O http://softlayer-dal.dl.sourceforge.net/project/quantlib/QuantLib/1.4/QuantLib-1.4.tar.gz && \
-    tar -zxvf QuantLib-1.4.tar.gz && \
-    cd QuantLib-1.4 && \
-    ./configure && \
-    make && \
-    make install && \
-    rm -rf /tmp/QuantLib-1.4 /tmp/QuantLib-1.4.tar.gz
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends openjdk-8-jdk
