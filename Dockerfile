@@ -15,11 +15,11 @@ RUN update-locale --reset LANG=C.UTF-8
 # update apt & install packages
 RUN apt-get update -qq && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-    biblatex \
+    biber \
     build-essential \
     curl \
     jags \
-    libatlas3gf-base \
+    libatlas3-base \
     libboost-all-dev \
     libcairo2 \
     libcairo2-dev \
@@ -29,7 +29,7 @@ RUN apt-get update -qq && \
     libmyodbc \
     libmysqlclient-dev \
     libnetcdf-dev \
-    libproc-dev \
+    libprocps3-dev \
     libproj-dev \
     libprotoc-dev \
     libxml2-dev \
