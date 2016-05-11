@@ -1,4 +1,4 @@
-FROM ubuntu:12.04
+FROM ubuntu:trusty
 MAINTAINER Chad Barraford <chad@rstudio.com>
 
 # add R apt repository
@@ -27,7 +27,7 @@ RUN apt-get update -qq && \
     libgdal1-dev \
     libgraphviz-dev \
     libmyodbc \
-    libmysqlclient15-dev \
+    libmysqlclient-dev \
     libnetcdf-dev \
     libproc-dev \
     libproj-dev \
