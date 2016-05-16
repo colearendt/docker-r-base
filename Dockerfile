@@ -1,5 +1,5 @@
 FROM ubuntu:12.04
-MAINTAINER Chad Barraford <chad@rstudio.com>
+MAINTAINER RStudio Docker <docker@rstudio.com>
 
 # add R apt repository
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
