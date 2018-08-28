@@ -2,7 +2,7 @@ FROM ubuntu:xenial
 MAINTAINER RStudio Docker <docker@rstudio.com>
 
 # add R apt repository
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 0x51716619e084dab9
 RUN echo "deb http://cran.rstudio.com/bin/linux/ubuntu xenial/" >> /etc/apt/sources.list.d/cran-rstudio.list
 
 # Set default locale
